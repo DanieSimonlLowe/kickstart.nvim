@@ -84,6 +84,20 @@ I hope you enjoy your Neovim journey,
 P.S. You can delete this when you're done too. It's your config now! :)
 --]]
 
+vim.opt.tabstop = 4      -- Number of spaces that a <Tab> counts for
+vim.opt.softtabstop = 4  -- Number of spaces that a <Tab> counts for while editing
+vim.opt.shiftwidth = 4   -- Number of spaces used for each step of (auto)indent
+vim.opt.expandtab = true -- Convert tabs to spaces
+
+vim.api.nvim_create_autocmd("BufWritePre", {
+  pattern = {"*.c", "*.cpp", "*.h", "*.hpp"},
+  callback = function()
+	  vim.lsp.buf.format({
+	    async = false,
+	    timeout_ms = 1000,
+	  })
+})
+
 -- Set <space> as the leader key
 -- See `:help mapleader`
 --  NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
@@ -764,7 +778,7 @@ require('lazy').setup({
         -- Disable "format_on_save lsp_fallback" for languages that don't
         -- have a well standardized coding style. You can add additional
         -- languages here or re-enable it for the disabled ones.
-        local disable_filetypes = { c = true, cpp = true }
+        local disable_filetypes = { }
         if disable_filetypes[vim.bo[bufnr].filetype] then
           return nil
         else
@@ -1022,3 +1036,5 @@ require('lazy').setup({
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
+
+
