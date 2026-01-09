@@ -96,6 +96,7 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 	    async = false,
 	    timeout_ms = 1000,
 	  })
+  end
 })
 
 -- Set <space> as the leader key
